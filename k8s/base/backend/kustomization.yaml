@@ -6,6 +6,7 @@ resources:
   - service.yaml
   - hpa.yaml
   - serviceaccount.yaml
+  - servicemonitor.yaml
 
 images:
   - name: 569946568662.dkr.ecr.ap-southeast-1.amazonaws.com/fintrack/backend 

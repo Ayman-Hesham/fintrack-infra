@@ -91,11 +91,13 @@ variable "rds_multi_az" {
 variable "github_org" {
   description = "GitHub organization name"
   type        = string
+  default     = "Ayman-Hesham"
 }
 
 variable "github_repo" {
   description = "GitHub repository name for application code"
   type        = string
+  default     = "Fintrack"
 }
 
 variable "alertmanager_smtp_password" {
