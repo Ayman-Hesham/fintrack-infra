@@ -1,4 +1,3 @@
-# IRSA role for Loki to access S3
 data "aws_iam_policy_document" "loki_assume_role" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]

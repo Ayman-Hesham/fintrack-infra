@@ -10,13 +10,13 @@ resource "helm_release" "argocd" {
       service = {
         type = "LoadBalancer"
       }
-      replicas = 1 # Cost optimization
+      replicas = 1
     }
     controller = {
-      replicas = 1 # Cost optimization
+      replicas = 1
     }
     repoServer = {
-      replicas = 1 # Cost optimization
+      replicas = 1
     }
     configs = {
       params = {

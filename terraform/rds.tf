@@ -36,14 +36,12 @@ resource "aws_db_instance" "main" {
   db_subnet_group_name   = aws_db_subnet_group.main.name
   vpc_security_group_ids = [aws_security_group.rds.id]
 
-  # Cost optimization for learning
   skip_final_snapshot     = true
   backup_retention_period = 0
   multi_az                = var.rds_multi_az
   publicly_accessible     = !var.enable_nat_gateway
   deletion_protection     = false
 
-  # Disable automated backups for learning
   backup_window      = null
   maintenance_window = null
 }

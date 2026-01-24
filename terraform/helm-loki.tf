@@ -2,31 +2,24 @@ resource "helm_release" "loki" {
   name       = "loki"
   repository = "https://grafana.github.io/helm-charts"
   chart      = "loki"
-  version    = "5.47.1" # Using newer loki chart (not loki-stack) for S3 support
+  version    = "5.47.1"
   namespace  = kubernetes_namespace.observability.metadata[0].name
 
   values = [yamlencode({
-    # Single binary mode for simplicity (good for learning/small scale)
     deploymentMode = "SingleBinary"
 
     loki = {
-      # Use S3 for storage instead of filesystem
       storage = {
         type = "s3"
         s3 = {
           region      = var.aws_region
           bucketnames = aws_s3_bucket.loki.id
-          # Use IRSA for authentication (no access keys needed)
-          # The service account annotation handles authentication
         }
       }
 
-      # Common config for all components
       commonConfig = {
         replication_factor = 1
       }
-
-      # Schema configuration
       schemaConfig = {
         configs = [{
           from         = "2026-01-22"
@@ -40,7 +33,6 @@ resource "helm_release" "loki" {
         }]
       }
 
-      # Storage config
       storage_config = {
         tsdb_shipper = {
           active_index_directory = "/var/loki/tsdb-index"
@@ -48,9 +40,8 @@ resource "helm_release" "loki" {
         }
       }
 
-      # Limits for cost optimization
       limits_config = {
-        retention_period            = "168h" # 7 days retention
+        retention_period            = "168h"
         ingestion_rate_mb           = 4
         ingestion_burst_size_mb     = 6
         max_streams_per_user        = 10000
@@ -58,16 +49,14 @@ resource "helm_release" "loki" {
       }
     }
 
-    # Single binary configuration
     singleBinary = {
       replicas = 1
       persistence = {
         enabled = true
-        size    = "2Gi" # Small local storage for WAL/cache only
+        size    = "2Gi"
       }
     }
 
-    # Service account with IRSA annotation
     serviceAccount = {
       create = true
       name   = "loki"
@@ -76,7 +65,6 @@ resource "helm_release" "loki" {
       }
     }
 
-    # Disable components not needed for single binary mode
     backend = {
       replicas = 0
     }
@@ -87,28 +75,24 @@ resource "helm_release" "loki" {
       replicas = 0
     }
 
-    # Gateway configuration
     gateway = {
       enabled  = true
       replicas = 1
     }
 
-    # Disable minio (we're using AWS S3)
     minio = {
       enabled = false
     }
 
-    # Monitoring
     monitoring = {
       selfMonitoring = {
-        enabled = false # Disable for cost savings
+        enabled = false
       }
       lokiCanary = {
         enabled = false
       }
     }
 
-    # Test configuration
     test = {
       enabled = false
     }
@@ -121,7 +105,6 @@ resource "helm_release" "loki" {
   ]
 }
 
-# Fluent Bit for log collection (separate from Loki)
 resource "helm_release" "fluent_bit" {
   name       = "fluent-bit"
   repository = "https://fluent.github.io/helm-charts"

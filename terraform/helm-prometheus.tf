@@ -8,21 +8,20 @@ resource "helm_release" "prometheus" {
   values = [yamlencode({
     prometheus = {
       prometheusSpec = {
-        replicas  = 1    # Cost optimization
-        retention = "2h" # Short retention for learning
+        replicas  = 1
+        retention = "3h"
         storageSpec = {
           volumeClaimTemplate = {
             spec = {
               accessModes = ["ReadWriteOnce"]
               resources = {
                 requests = {
-                  storage = "5Gi" # Minimal storage
+                  storage = "5Gi"
                 }
               }
             }
           }
         }
-        # Additional scrape configs for custom metrics
         additionalScrapeConfigs = []
       }
     }
@@ -32,7 +31,6 @@ resource "helm_release" "prometheus" {
       service = {
         type = "LoadBalancer"
       }
-      # Pre-configure Alertmanager as datasource
       additionalDataSources = [{
         name      = "Alertmanager"
         type      = "alertmanager"
@@ -42,9 +40,9 @@ resource "helm_release" "prometheus" {
       }]
     }
     alertmanager = {
-      enabled = true # Enable for learning
+      enabled = true
       alertmanagerSpec = {
-        replicas = 1 # Cost optimization
+        replicas = 1
         storage = {
           volumeClaimTemplate = {
             spec = {
@@ -59,7 +57,7 @@ resource "helm_release" "prometheus" {
         }
       }
       service = {
-        type = "LoadBalancer" # Expose for easy access
+        type = "LoadBalancer"
       }
       config = {
         global = {
@@ -88,7 +86,6 @@ resource "helm_release" "prometheus" {
         ]
       }
     }
-    # Add default alert rules
     defaultRules = {
       create = true
       rules = {

@@ -7,7 +7,7 @@ resource "helm_release" "metrics_server" {
 
   set = {
     name  = "replicas"
-    value = "1" # Cost optimization
+    value = "1"
   }
 
   depends_on = [module.eks]

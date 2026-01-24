@@ -24,7 +24,7 @@ resource "helm_release" "alb_controller" {
     },
     {
       name  = "replicaCount"
-      value = "1" # Cost optimization
+      value = "1"
     }
   ]
 

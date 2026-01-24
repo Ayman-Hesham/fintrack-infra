@@ -1,4 +1,3 @@
-# S3 bucket for Loki log storage
 resource "aws_s3_bucket" "loki" {
   bucket = "${var.project_name}-loki-${data.aws_caller_identity.current.account_id}"
 
@@ -9,7 +8,6 @@ resource "aws_s3_bucket" "loki" {
   }
 }
 
-# Block public access
 resource "aws_s3_bucket_public_access_block" "loki" {
   bucket = aws_s3_bucket.loki.id
 
@@ -19,15 +17,13 @@ resource "aws_s3_bucket_public_access_block" "loki" {
   restrict_public_buckets = true
 }
 
-# Enable versioning for data protection (optional, can disable for cost savings)
 resource "aws_s3_bucket_versioning" "loki" {
   bucket = aws_s3_bucket.loki.id
   versioning_configuration {
-    status = "Disabled" # Enable if you need versioning
+    status = "Disabled"
   }
 }
 
-# Lifecycle rule to manage storage costs
 resource "aws_s3_bucket_lifecycle_configuration" "loki" {
   bucket = aws_s3_bucket.loki.id
 
@@ -35,25 +31,20 @@ resource "aws_s3_bucket_lifecycle_configuration" "loki" {
     id     = "expire-old-logs"
     status = "Enabled"
 
-    # Move to cheaper storage after 7 days
     transition {
       days          = 7
       storage_class = "STANDARD_IA"
     }
 
-    # Delete logs after 7 days (adjust based on retention needs)
     expiration {
       days = 7
     }
-
-    # Clean up incomplete multipart uploads
     abort_incomplete_multipart_upload {
       days_after_initiation = 7
     }
   }
 }
 
-# Server-side encryption
 resource "aws_s3_bucket_server_side_encryption_configuration" "loki" {
   bucket = aws_s3_bucket.loki.id
 

@@ -10,11 +10,9 @@ module "eks" {
 
   cluster_endpoint_public_access = true
 
-  # Cost optimization: Minimal compute
   eks_managed_node_group_defaults = {
     instance_types = var.node_instance_types
 
-    # Use public subnets if no NAT gateway (for learning)
     subnet_ids = var.enable_nat_gateway ? module.vpc.private_subnets : module.vpc.public_subnets
   }
 
@@ -27,7 +25,6 @@ module "eks" {
       instance_types = var.node_instance_types
       capacity_type  = var.use_spot_instances ? "SPOT" : "ON_DEMAND"
 
-      # Public IP for nodes if no NAT gateway
       enable_bootstrap_user_data = !var.enable_nat_gateway
 
       labels = {
@@ -43,6 +40,5 @@ module "eks" {
 
   enable_cluster_creator_admin_permissions = true
 
-  # Enable IRSA (IAM Roles for Service Accounts)
   enable_irsa = true
 }
