@@ -31,6 +31,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "loki" {
     id     = "expire-old-logs"
     status = "Enabled"
 
+    filter {}
+
     transition {
       days          = 7
       storage_class = "STANDARD_IA"
