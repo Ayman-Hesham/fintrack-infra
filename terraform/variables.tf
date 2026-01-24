@@ -19,7 +19,7 @@ variable "environment" {
 variable "cluster_version" {
   description = "Kubernetes version"
   type        = string
-  default     = "1.28"
+  default     = "1.29"
 }
 
 variable "vpc_cidr" {
@@ -43,7 +43,7 @@ variable "single_nat_gateway" {
 variable "node_instance_types" {
   description = "EC2 instance types for EKS nodes"
   type        = list(string)
-  default     = ["t3.small"]
+  default     = ["t3.medium"]
 }
 
 variable "node_desired_size" {

@@ -32,7 +32,7 @@ resource "aws_iam_role_policy" "external_secrets" {
   role = aws_iam_role.external_secrets.id
 
   policy = jsonencode({
-    Version = "2026-01-18"
+    Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
       Action = [

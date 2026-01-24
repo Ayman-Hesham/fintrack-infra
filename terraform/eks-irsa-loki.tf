@@ -32,7 +32,7 @@ resource "aws_iam_role_policy" "loki_s3" {
   role = aws_iam_role.loki.id
 
   policy = jsonencode({
-    Version = "2026-01-22"
+    Version = "2012-10-17"
     Statement = [
       {
         Effect = "Allow"

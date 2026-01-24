@@ -26,7 +26,7 @@ resource "aws_security_group" "rds" {
 resource "aws_db_instance" "main" {
   identifier             = "${var.project_name}-db"
   engine                 = "postgres"
-  engine_version         = "15.4"
+  engine_version         = "17.7"
   instance_class         = var.rds_instance_class
   allocated_storage      = var.rds_allocated_storage
   storage_encrypted      = true

@@ -25,7 +25,8 @@ module "eks" {
       instance_types = var.node_instance_types
       capacity_type  = var.use_spot_instances ? "SPOT" : "ON_DEMAND"
 
-      enable_bootstrap_user_data = !var.enable_nat_gateway
+      ami_type                   = "AL2_x86_64"
+      enable_bootstrap_user_data = false
 
       labels = {
         Environment = var.environment

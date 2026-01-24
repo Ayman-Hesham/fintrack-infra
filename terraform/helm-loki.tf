@@ -41,7 +41,7 @@ resource "helm_release" "loki" {
       }
 
       limits_config = {
-        retention_period            = "168h"
+        retention_period            = "30d"
         ingestion_rate_mb           = 4
         ingestion_burst_size_mb     = 6
         max_streams_per_user        = 10000

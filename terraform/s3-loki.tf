@@ -34,15 +34,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "loki" {
     filter {}
 
     transition {
-      days          = 7
+      days          = 30
       storage_class = "STANDARD_IA"
     }
 
     expiration {
-      days = 7
+      days = 90
     }
     abort_incomplete_multipart_upload {
-      days_after_initiation = 7
+      days_after_initiation = 30
     }
   }
 }

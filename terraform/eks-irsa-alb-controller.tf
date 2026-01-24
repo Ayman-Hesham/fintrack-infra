@@ -27,7 +27,8 @@ resource "aws_iam_role" "alb_controller" {
   assume_role_policy = data.aws_iam_policy_document.alb_controller_assume_role.json
 }
 
-resource "aws_iam_role_policy_attachment" "alb_controller" {
-  role       = aws_iam_role.alb_controller.name
-  policy_arn = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+resource "aws_iam_role_policy" "alb_controller" {
+  name   = "${var.project_name}-alb-controller-policy"
+  role   = aws_iam_role.alb_controller.id
+  policy = file("${path.module}/policies/iam_policy.json")
 }
