@@ -5,7 +5,7 @@ resource "helm_release" "external_secrets" {
   version    = "0.9.11"
   namespace  = "kube-system"
 
-  set = {
+  set {
     name  = "installCRDs"
     value = "true"
   }
