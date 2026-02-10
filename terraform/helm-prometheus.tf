@@ -30,6 +30,10 @@ resource "helm_release" "prometheus" {
       replicas      = 1
       service = {
         type = "LoadBalancer"
+        annotations = {
+          "service.beta.kubernetes.io/aws-load-balancer-scheme" = "internet-facing"
+          "service.beta.kubernetes.io/aws-load-balancer-type"   = "external"
+        }
       }
       additionalDataSources = [{
         name      = "Alertmanager"
@@ -58,6 +62,10 @@ resource "helm_release" "prometheus" {
       }
       service = {
         type = "LoadBalancer"
+        annotations = {
+          "service.beta.kubernetes.io/aws-load-balancer-scheme" = "internet-facing"
+          "service.beta.kubernetes.io/aws-load-balancer-type"   = "external"
+        }
       }
       config = {
         global = {

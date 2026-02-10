@@ -5,6 +5,18 @@ resource "helm_release" "alb_controller" {
   version    = "1.6.2"
   namespace  = "kube-system"
 
+  wait          = true
+  wait_for_jobs = true
+  timeout       = 300
+
+  set {
+    name  = "prometheus.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-scheme"
+    value = "internet-facing"
+  }
+  set {
+    name  = "prometheus.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
+    value = "external"
+  }
   set {
     name  = "clusterName"
     value = module.eks.cluster_name

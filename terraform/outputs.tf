@@ -69,7 +69,7 @@ output "access_urls" {
     argocd       = "kubectl get svc argocd-server -n argocd -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
     grafana      = "kubectl get svc kube-prometheus-stack-grafana -n observability -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
     alertmanager = "kubectl get svc kube-prometheus-stack-alertmanager -n observability -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
-    ingress      = "kubectl get svc ingress-nginx-controller -n application -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
+    ingress      = "kubectl get ingress app-ingress -n application -o jsonpath='{.status.loadBalancer.ingress[0].hostname}'"
   }
 }
 
