@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - secret-store.yaml
   - external-secret.yaml
+  - serviceaccount.yaml
