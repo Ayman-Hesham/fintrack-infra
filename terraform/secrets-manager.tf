@@ -28,8 +28,8 @@ resource "aws_secretsmanager_secret" "app_secrets" {
 }
 
 resource "random_string" "jwt_secret" {
-  length  = 32
-  special = true
+  length  = 64
+  special = false
 }
 
 resource "aws_secretsmanager_secret_version" "app_secrets" {

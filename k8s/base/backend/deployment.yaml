@@ -74,12 +74,12 @@ spec:
           httpGet:
             path: /alive
             port: 8000
-          initialDelaySeconds: 5
+          initialDelaySeconds: 60
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /ready
             port: 8000
-          initialDelaySeconds: 10
+          initialDelaySeconds: 60
           periodSeconds: 10
           failureThreshold: 3
