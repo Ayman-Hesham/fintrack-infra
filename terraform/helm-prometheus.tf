@@ -85,6 +85,9 @@ resource "helm_release" "prometheus" {
         }
         receivers = [
           {
+            name = "null"
+          },
+          {
             name = "email-receiver"
             email_configs = [{
               to            = "aymanhesham249@gmail.com"
