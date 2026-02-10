@@ -9,6 +9,7 @@ resource "helm_release" "loki" {
     deploymentMode = "SingleBinary"
 
     loki = {
+      auth_enabled = false
       storage = {
         type = "s3"
         s3 = {
