@@ -2,13 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - deployment.yaml
-  - service.yaml
-  - hpa.yaml
-  - serviceaccount.yaml
-  - servicemonitor.yaml
+- deployment.yaml
+- service.yaml
+- hpa.yaml
+- serviceaccount.yaml
+- servicemonitor.yaml
 
 images:
-  - name: 569946568662.dkr.ecr.ap-southeast-1.amazonaws.com/fintrack/backend 
-    newName: 569946568662.dkr.ecr.ap-southeast-1.amazonaws.com/fintrack/backend
-    newTag: latest 
+- name: 569946568662.dkr.ecr.ap-southeast-1.amazonaws.com/fintrack/backend
+  newTag: afeeeb66d47109fe7d07ee1c4246dd6343423742
